@@ -1,30 +1,24 @@
 module.exports = Phrase;
-// Adds 'reverse'to all strings.
-String.prototype.reverse = function(){
+
+// Adds `reverse` to all strings.
+String.prototype.reverse = function() {
   return Array.from(this).reverse().join("");
-}
-
-// Adds "blank" to all strings.
-String.prototype.blank = function() {
-	return (this.length === 0 || /^\s*$/.test(this));
-}
-
-// Adds method to grab last element of an array to arrays
-Array.prototype.last = function() {
-	return (this.reverse()[0]);
 }
 
 // Defines a Phrase object.
 function Phrase(content) {
   this.content = content;
 
-  this.processor = function(string) {
-  	return string.toLowerCase();
-  }
-
   // Returns content processed for palindrome testing.
   this.processedContent = function processedContent() {
-    return this.processor(this.content);
+    return this.letters().toLowerCase();
+  }
+
+  // Returns the letters in the content.
+  // For example:
+  //   new Phrase("Hello, world!").letters() === "Helloworld"
+  this.letters = function letters() {
+    return (this.content.match(/[a-z]/i) || []).join("");
   }
 
   // Returns true if the phrase is a palindrome, false otherwise.
@@ -32,4 +26,3 @@ function Phrase(content) {
     return this.processedContent() === this.processedContent().reverse();
   }
 }
-
